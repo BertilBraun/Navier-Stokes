@@ -1,6 +1,6 @@
 
-N = 100
-SCALE = 6
+N = 256
+SCALE = 4
 iter = 16
 
 
