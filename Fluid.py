@@ -1,6 +1,6 @@
-from Vec2 import Vec2
 from Settings import *
 from Fluid_Util import *
+import numpy as np
 
 # Fluid cube class
 class Fluid:
@@ -9,13 +9,13 @@ class Fluid:
         self.diff = diffusion
         self.visc = viscosity
     
-        self.s = [0 for _ in range(N*N)]
-        self.density = [0 for _ in range(N*N)]
+        self.s = np.array([0 for _ in range(N*N)], dtype=np.float64)
+        self.density = np.array([0 for _ in range(N*N)], dtype=np.float64)
     
-        self.Vx = [0 for _ in range(N*N)] 
-        self.Vy = [0 for _ in range(N*N)]   
-        self.Vx0 = [0 for _ in range(N*N)]
-        self.Vy0 = [0 for _ in range(N*N)]
+        self.Vx = np.array([0 for _ in range(N*N)], dtype=np.float64)
+        self.Vy = np.array([0 for _ in range(N*N)], dtype=np.float64)  
+        self.Vx0 = np.array([0 for _ in range(N*N)], dtype=np.float64)
+        self.Vy0 = np.array([0 for _ in range(N*N)], dtype=np.float64)
         
   # step method
     def step(self):
@@ -54,8 +54,9 @@ class Fluid:
             for j in range(N):
                 x = i * SCALE
                 y = j * SCALE
-                v = Vec2(self.Vx[IX(i, j)], self.Vy[IX(i, j)])
+                vx = self.Vx[IX(i, j)]
+                vy = self.Vy[IX(i, j)]
                 stroke(0)
         
                 if abs(v) > 0.1:
-                    line(x, y, x + v.x * SCALE, y + v.y * SCALE)
+                    line(x, y, x + vx * SCALE, y + vy * SCALE)
